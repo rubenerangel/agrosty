@@ -10,7 +10,7 @@
       <tr>
         <th>
           <td colspan="6">
-            <a class="btn btn-warning" href="{{ route('export') }}">Excel Emails</a> &nbsp;
+            <a id="exportExcel" class="btn btn-warning" href="{{ route('export') }}">Excel Emails</a> &nbsp;
             <a class="btn btn-danger" href="{{ route('exportPDF') }}">PDF Emails</a></td>
         </th>
       </tr>

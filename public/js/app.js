@@ -37266,6 +37266,23 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+$(document).ready(function () {
+  if (document.getElementById("exportExcel")) {
+    document.getElementById("exportExcel").addEventListener("click", function (e) {
+      e.preventDefault();
+      axios.get('/export').then(function (response) {
+        console.log(response);
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Mails.xlsx');
+        document.body.appendChild(link);
+        link.click();
+      });
+    });
+  }
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

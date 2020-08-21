@@ -21,29 +21,23 @@ class MyController extends Controller
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function export() 
+    public function export(Request $response) 
     {
-        return Excel::download(new MailsExport, 'Mails.xlsx');
+        return  Excel::download(new MailsExport, 'Mails.xlsx');
     }
    
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function import() 
+    public function import(Request $request) 
     {
         Excel::import(new MailsImport,request()->file('file'));
-           
         return back();
     }
 
     public function exportPDF()
 	{
-	   $data = Email::get()->toArray();
-	   /* return Excel::create('Agrosty', function($excel) use ($data) {
-		$excel->sheet('mySheet', function($sheet) use ($data)
-	    {
-			$sheet->fromArray($data);
-	    });
-	   })->download("pdf"); */
+	
+       return  Excel::download(new MailsExport, 'Mails.pdf');
 	}
 }

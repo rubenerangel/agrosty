@@ -17,7 +17,6 @@
         @include('includes.footer')
     </footer>
     </div>
-    <!-- JavaScript -->
-    <script href="{{ asset('js/app.js') }}" defer></script>
+    
   </body>
 </html>

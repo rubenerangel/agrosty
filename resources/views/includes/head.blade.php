@@ -3,8 +3,8 @@
 
 <title>Agrosty</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+<!-- JavaScript -->
+<script src="js/app.js"></script>
 
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
