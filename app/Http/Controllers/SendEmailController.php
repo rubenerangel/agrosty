@@ -24,18 +24,85 @@ class SendEmailController extends Controller
 				'mensaje' =>  'required'
 			 ]);
 	
-            $data = array(
-                  'name'    =>  $request->name,
-                  'message' =>   $request->message,
-                  'asunto'  =>    $request->asunto,
-                  'mensaje' =>   $request->mensaje
-            );
+         $data = array(
+            'name'    =>  $request->name,
+            'message' =>   $request->message,
+            'asunto'  =>    $request->asunto,
+            'mensaje' =>   $request->mensaje
+         );
 
-         $email = new Email($request->all());
+         $isSpam = $this->isSpamTheEmail($request->mensaje);
+         $spam = $isSpam;
+
+         // array_push($request->all(), $spam);
+         $email = [];
+
+         $email['name'] = $request->name;
+         $email['email'] = $request->email;
+         $email['asunto'] = $request->asunto;
+         $email['mensaje'] = $request->mensaje;
+         $email['spam'] = $spam;
+
+         /* Save data DB */
+         $email = new Email($email);
          $email->save();
-         	
+            
+         /* Send Email */
 			 Mail::to($request->email)->send(new EmailConfirmation($data));
 			 return back()->with('success', 'Thanks for contacting us!');
+      }
+
+      private function isSpamTheEmail(String $asunto) {
+         /* $text = "orem viagra is simply dummy text of the printing and typesetting oferta. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, buy also the leap into electronic typesetting, remaining oferta unchanged. It was ofertas in the 1960s with the release of Letraset sheets containing buy Ipsum passages, and buy recently with desktop publishing software like Aldus PageMaker including versions of viagra Ipsum."; */
+
+         $text = strtolower($asunto);
+
+         $totalAcum = 1;
+         $viagra = $oferta = $ofertas = $buy = $contactanos = $tarifas = $stock = 0;
+
+         $viagra = substr_count($asunto, 'viagra'); //5
+         if ($viagra > 0) {
+            $totalAcum++;
+         }
+
+         $oferta = substr_count($asunto, 'oferta'); //4
+         if ($oferta > 0) {
+            $totalAcum++;
+         }
+
+         $ofertas = substr_count($asunto, 'ofertas'); //4
+         if ($ofertas > 0) {
+            $totalAcum++;
+         }
+
+         $buy = substr_count($asunto, 'buy'); //5
+         if ($buy > 0) {
+            $totalAcum++;
+         }
+
+         $contactanos = substr_count($asunto, 'contactanos'); //3
+         if ($contactanos > 0) {
+            $totalAcum++;
+         }
+
+         $tarifas = substr_count($asunto, 'tarifas'); //2
+         if ($tarifas > 0) {
+            $totalAcum++;
+         }
+
+         $stock = substr_count($asunto, 'stock'); //1
+         if ($stock > 0) {
+            $totalAcum++;
+         }
+
+         /* Is Spam? */
+         // $isSpam = 0;
+         $isSpam = ($viagra + $oferta + $ofertas + $buy + $contactanos + $tarifas + $stock) / $totalAcum;
+
+         if ($isSpam <= 2.5)
+            return 0;
+         else
+            return 1;
       }
       
       public function showEmail()
