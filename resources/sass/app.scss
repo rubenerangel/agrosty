@@ -1,0 +1,35 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+#sidebarMenu {
+  background-color: #575c60 !important;
+  
+
+  a {
+    color: #fff !important;
+  }
+}
+
+table {
+  .table-striped{
+    .col-4 {
+      max-height: 50px;
+    }
+  }
+}
+
+.card-body {
+  .counters {
+    font-size: 3rem;
+    font-weight: 600;
+  }
+}
+
+
+
